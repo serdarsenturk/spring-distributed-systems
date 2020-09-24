@@ -1,12 +1,11 @@
-#For Java 11
-FROM maven:3.6-jdk-11 as builder
-WORKDIR /build
-#Copy pom.xml
-COPY pom.xml .
-COPY src ./src
-RUN mvn dependency:go-offline
+#Maven Build
+FROM maven:3.6-jdk-11 AS build
+COPY . /usr/src/app/
+WORKDIR /usr/src/app/
+RUN mvn -f /usr/src/app/pom.xml clean package
 
-COPY src/ /build/src/
-RUN mvn package
-CMD exec java $JAVA_OPTS -jar /app/my-app.jar
-COPY --from=target /build/target/*jar-with-dependencies.jar /app/hello.jar
+#Package build
+FROM openjdk:11.0-jre
+WORKDIR /
+COPY --from=build /usr/src/app/target/*.jar /app.jar
+CMD java -jar app.jar
