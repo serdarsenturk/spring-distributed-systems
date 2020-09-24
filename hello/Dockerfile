@@ -1,14 +1,12 @@
 #For Java 11
-FROM adoptopenjdk:11-jre-hotspot as builder
-WORKDIR application
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} application.jar
-RUN java -Djarmode=layertools -jar application.jar extract
+FROM maven:3.6-jdk-11 as builder
+WORKDIR /build
+#Copy pom.xml
+COPY pom.xml .
+COPY src ./src
+RUN mvn dependency:go-offline
 
-FROM adoptopenjdk:11-jre-hotspot
-WORKDIR application
-COPY --from=builder application/dependencies/ ./
-COPY --from=builder application/spring-boot-loader ./
-COPY --from=builder application/snapshot-dependencies/ ./
-COPY --from=builder application/application/ ./
-ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
+COPY src/ /build/src/
+RUN mvn package
+CMD exec java $JAVA_OPTS -jar /app/my-app.jar
+COPY --from=target /build/target/*jar-with-dependencies.jar /app/hello.jar
