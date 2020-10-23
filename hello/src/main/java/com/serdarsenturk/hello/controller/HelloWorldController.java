@@ -10,7 +10,7 @@ public class HelloWorldController {
 
     @Autowired
     Publisher publisher;
-    @RequestMapping("/hello")
+    @RequestMapping("/hello/send")
     public String sendMessage(@RequestParam("message") String message){
         System.out.println(message);
             publisher.produce(message);
