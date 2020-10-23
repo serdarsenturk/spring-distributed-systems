@@ -6,17 +6,17 @@ import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeoutException;
 
 public class Mainweb {
 
-    public static void main(String[] argv) throws IOException, TimeoutException {
+    public static void main(String[] argv) throws IOException, TimeoutException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
 
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
-        factory.setPort(5672);
-        factory.setUsername("guest");
-        factory.setPassword("guest");
+        factory.setUri("amqps://yrtwpsmn:RppiFqo59jwb0fQchERAtV1QmM6Sd-iT@woodpecker.rmq.cloudamqp.com/yrtwpsmn");
 
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
