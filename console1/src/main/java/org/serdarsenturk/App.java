@@ -9,14 +9,15 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
 import java.util.concurrent.TimeoutException;
 
 public class App
 {
     public static void main(String[] argv) throws IOException, TimeoutException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
-
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setUri("amqps://yrtwpsmn:RppiFqo59jwb0fQchERAtV1QmM6Sd-iT@woodpecker.rmq.cloudamqp.com/yrtwpsmn");
+        String uri = System.getProperty("RABBITMQ_CONN");
+        factory.setUri(uri);
 
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
