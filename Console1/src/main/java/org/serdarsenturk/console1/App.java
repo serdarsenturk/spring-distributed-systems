@@ -1,4 +1,4 @@
-package org.serdarsenturk;
+package org.serdarsenturk.console1;
 
 
 import com.rabbitmq.client.Channel;
@@ -11,8 +11,8 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeoutException;
 
-import static org.serdarsenturk.services.Consumer1.consumeAndSendMessage;
-import static org.serdarsenturk.services.Consumer2.consumeAndSendMail;
+import static org.serdarsenturk.console1.services.Consumer1.consumeAndSendMessage;
+import static org.serdarsenturk.console1.services.Consumer2.consumeAndSendMail;
 
 public class App
 {

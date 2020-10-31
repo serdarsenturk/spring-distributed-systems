@@ -1,4 +1,4 @@
-package org.serdarsenturk;
+package org.serdarsenturk.console1;
 
 import static org.junit.Assert.assertTrue;
 

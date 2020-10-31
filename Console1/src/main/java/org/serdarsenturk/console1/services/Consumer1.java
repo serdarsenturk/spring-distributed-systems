@@ -1,4 +1,4 @@
-package org.serdarsenturk.services;
+package org.serdarsenturk.console1.services;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.DeliverCallback;
