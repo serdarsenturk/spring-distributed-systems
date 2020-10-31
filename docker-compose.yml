@@ -1,0 +1,7 @@
+version: "3.8"
+services:
+  console1:
+    image: "console1:1.3"
+    scale: 3
+    env_file:
+      - ./console1/.env.development
