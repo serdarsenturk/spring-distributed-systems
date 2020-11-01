@@ -19,11 +19,8 @@ public class RabbitMQConfig {
     @Value("${serdarsenturk.rabbitmq.queue}")
     String queueName;
 
-    @Value("${serdarsenturk.rabbitmq.exchange}")
-    String exchange;
-
-    @Value("${serdarsenturk.rabbitmq.routingkey}")
-    private String routingkey;
+    @Value("${serdarsenturk.rabbitmq.queue2}")
+    String queueName2;
 
     @Bean
     Queue queue() {
@@ -31,14 +28,10 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    DirectExchange exchange() {
-        return new DirectExchange(exchange);
+    Queue queue2(){
+        return new Queue(queueName2, false);
     }
 
-    @Bean
-    Binding binding(Queue queue, DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(routingkey);
-    }
 
     @Bean
     public MessageConverter jsonMessageConverter() {

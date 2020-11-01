@@ -13,14 +13,16 @@ public class Publisher {
     @Autowired
     private AmqpTemplate amqpTemplate;
 
-    @Value("${serdarsenturk.rabbitmq.exchange}")
-    private String exchange;
+    @Value("${serdarsenturk.rabbitmq.queue}")
+    private String queue;
 
-    @Value("${serdarsenturk.rabbitmq.routingkey}")
-    private String routingKey;
+    @Value("${serdarsenturk.rabbitmq.queue2}")
+    private String queue2;
+
 
     public void produce(String msg){
-        amqpTemplate.convertAndSend(exchange, routingKey, msg);
+        amqpTemplate.convertAndSend(queue, msg);
+        amqpTemplate.convertAndSend(queue2, msg);
         System.out.println("Send message = **' " + msg);
     }
 }
