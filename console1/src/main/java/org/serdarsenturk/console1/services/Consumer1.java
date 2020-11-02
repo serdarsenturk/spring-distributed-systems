@@ -24,7 +24,7 @@ public class Consumer1 {
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
-        channel.basicQos(1);
+        channel.basicQos(2);
 
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 

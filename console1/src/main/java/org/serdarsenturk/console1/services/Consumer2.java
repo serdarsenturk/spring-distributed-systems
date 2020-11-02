@@ -23,7 +23,7 @@ public class Consumer2 {
         final Connection connection = factory.newConnection();
         final Channel channel = connection.createChannel();
 
-        channel.basicQos(1);
+        channel.basicQos(2);
 
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
             String message = new String(delivery.getBody(), "UTF-8");
