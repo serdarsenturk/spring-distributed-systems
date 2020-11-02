@@ -30,7 +30,6 @@ public class Publisher {
         amqpTemplate.convertAndSend(queue2, msg);
         amqpTemplate.convertAndSend(queue3, msg);
         amqpTemplate.convertAndSend(queue4, msg);
-
         System.out.println("Send message = **' " + msg);
     }
 }

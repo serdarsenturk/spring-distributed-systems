@@ -1,9 +1,6 @@
 package com.serdarsenturk.hello.config;
 
 import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -39,10 +36,14 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    Queue queue3(){ return new Queue(queueName3, false);}
+    Queue queue3(){
+        return new Queue(queueName3, false);
+    }
 
     @Bean
-    Queue queue4(){ return new Queue(queueName4, false);}
+    Queue queue4(){
+        return new Queue(queueName4, false);
+    }
 
     @Bean
     public MessageConverter jsonMessageConverter() {
