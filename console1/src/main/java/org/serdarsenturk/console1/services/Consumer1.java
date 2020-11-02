@@ -18,7 +18,7 @@ public class Consumer1 {
     public static void consumeAndSendMessage() throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException, IOException, TimeoutException {
 
         ConnectionFactory factory = new ConnectionFactory();
-        String uri = System.getProperty("RABBITMQ_CONN");
+        String uri = System.getenv("RABBITMQ_CONN");
         factory.setUri(uri);
 
         Connection connection = factory.newConnection();
