@@ -1,7 +1,6 @@
 package org.serdarsenturk.console1.services;
 
 import com.rabbitmq.client.Channel;
-
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
@@ -39,7 +38,6 @@ public class Consumer2 {
         };
         channel.basicConsume(TASK_QUEUE_NAME, false, deliverCallback, consumerTag -> { });
     }
-
     private static void doWork(String task) {
         for (char ch : task.toCharArray()) {
             if (ch == '.') {
