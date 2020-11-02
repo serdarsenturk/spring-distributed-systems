@@ -22,6 +22,12 @@ public class RabbitMQConfig {
     @Value("${serdarsenturk.rabbitmq.queue2}")
     String queueName2;
 
+    @Value("${serdarsenturk.rabbitmq.queue3}")
+    String queueName3;
+
+    @Value("${serdarsenturk.rabbitmq.queue4}")
+    String queueName4;
+
     @Bean
     Queue queue() {
         return new Queue(queueName, false);
@@ -32,6 +38,11 @@ public class RabbitMQConfig {
         return new Queue(queueName2, false);
     }
 
+    @Bean
+    Queue queue3(){ return new Queue(queueName3, false);}
+
+    @Bean
+    Queue queue4(){ return new Queue(queueName4, false);}
 
     @Bean
     public MessageConverter jsonMessageConverter() {

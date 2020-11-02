@@ -19,10 +19,18 @@ public class Publisher {
     @Value("${serdarsenturk.rabbitmq.queue2}")
     private String queue2;
 
+    @Value("${serdarsenturk.rabbitmq.queue3}")
+    private String queue3;
+
+    @Value("${serdarsenturk.rabbitmq.queue4}")
+    private String queue4;
 
     public void produce(String msg){
         amqpTemplate.convertAndSend(queue, msg);
         amqpTemplate.convertAndSend(queue2, msg);
+        amqpTemplate.convertAndSend(queue3, msg);
+        amqpTemplate.convertAndSend(queue4, msg);
+
         System.out.println("Send message = **' " + msg);
     }
 }
