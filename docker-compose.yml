@@ -1,13 +1,23 @@
 version: "3.8"
 services:
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
   console1:
-    image: "console1:1.4"
+    image: "console1:1.5"
     scale: 3
     env_file:
       - ./console1/.env.development
+  logger:
+    image: "logger:1.0"
+    scale: 3
+    env_file:
+      - ./logger/.env.development
 
   hello:
-    image: "hello:1.9"
+    image: "hello:2.0"
     scale : 1
     ports:
       - 8080:8080
