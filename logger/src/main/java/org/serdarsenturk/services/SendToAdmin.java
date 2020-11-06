@@ -17,8 +17,8 @@ public class SendToAdmin {
     public static void sendToAdmin() throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException, IOException, TimeoutException {
 
         ConnectionFactory factory = new ConnectionFactory();
-        String uri = System.getenv("RABBITMQ_CONN");
-        factory.setUri(uri);
+        String host = System.getenv("LOGGER_RABBITMQ_HOST");
+        factory.setHost(host);
 
         final Connection connection = factory.newConnection();
         final Channel channel = connection.createChannel();

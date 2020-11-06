@@ -6,19 +6,18 @@ import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeoutException;
 
 public class MessageLog {
     private static final String TASK_QUEUE_NAME = "serdarsenturk.queue3";
 
-    public static void messageLogger() throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException, IOException, TimeoutException {
-
+    public static void messageLogger() throws  IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
-        String uri = System.getenv("RABBITMQ_CONN");
-        factory.setUri(uri);
+        String host = System.getenv("LOGGER_RABBITMQ_HOST");
+        factory.setHost(host);
+        factory.setPort(5672);
+        factory.setUsername("guest");
+        factory.setPassword("guest");
 
         final Connection connection = factory.newConnection();
         final Channel channel = connection.createChannel();

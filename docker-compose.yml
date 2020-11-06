@@ -1,6 +1,5 @@
 version: "3.8"
 services:
-
   rabbitmq:
     image: rabbitmq:3-management
     ports:
@@ -9,24 +8,27 @@ services:
 
   redis:
     image: redis
+    scale : 0
     ports:
       - "6379:6379"
 
   console1:
-    image: "console1:1.6"
+    image: "console1:1.7"
     scale: 1
     env_file:
       - ./console1/.env.development
     depends_on:
       - rabbitmq
+      - hello
 
   logger:
-    image: "logger:1.1"
+    image: "logger:1.2"
     scale: 1
     env_file:
       - ./logger/.env.development
     depends_on:
       - rabbitmq
+      - hello
 
   hello:
     image: "hello:2.3"
