@@ -6,15 +6,18 @@ import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeoutException;
 
 public class Consumer2 {
     private static final String TASK_QUEUE_NAME = "serdarsenturk.queue2";
 
-    public static void consumeAndSendMail() throws IOException, TimeoutException {
+    public static void consumeAndSendMail() throws IOException, TimeoutException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
         ConnectionFactory factory = new ConnectionFactory();
-        String host = System.getenv("CONSOLE_RABBITMQ_HOST");
-        factory.setHost(host);
+        String uri = System.getenv("RABBITMQ_CONN");
+        factory.setUri(uri);
 
         final Connection connection = factory.newConnection();
         final Channel channel = connection.createChannel();
