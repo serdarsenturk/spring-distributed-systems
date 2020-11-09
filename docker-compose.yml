@@ -1,5 +1,15 @@
 version: "3.8"
 services:
+  mysql-service:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=distributed-services
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+    ports:
+      - 3306:3306
+
   redis:
     image: redis
     scale : 0
@@ -7,22 +17,23 @@ services:
       - "6379:6379"
 
   console1:
-    image: "console1:1.7"
-    scale: 3
+    image: "console1:1.8"
+    scale: 0
     env_file:
       - ./console1/.env.development
 
-
   logger:
-    image: "logger:1.2"
-    scale: 3
+    image: "logger:1.4"
+    scale: 0
     env_file:
       - ./logger/.env.development
 
   hello:
-    image: "hello:2.3"
+    image: "hello:2.4"
     scale : 1
     ports:
       - 8080:8080
+    depends_on:
+      - mysql-service
     env_file:
       - ./hello/.env.development
