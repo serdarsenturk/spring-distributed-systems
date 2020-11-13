@@ -13,7 +13,12 @@ public class HelloWorldController {
     @RequestMapping("/hello/send")
     public String sendMessage(@RequestParam("message") String message){
         System.out.println(message);
-            publisher.produce(message);
+        publisher.produce(message);
+
+        return "Successfully Message Sent";
+    }
+    @RequestMapping("/hello/cache")
+    public String sendMessage(@RequestParam("id") Integer id){
         return "Successfully Message Sent";
     }
 }
