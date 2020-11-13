@@ -1,15 +1,43 @@
 version: "3.8"
 services:
+
+  mysqldb:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - /Users/serdar/dockerdata/mysql:/var/lib/mysql
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+    ports:
+      - "3306:3306"
+
+  redis:
+    image: redis
+    scale : 1
+    hostname:
+      redis
+    ports:
+      - "6379:6379"
+
   console1:
-    image: "console1:1.4"
-    scale: 3
+    image: "console1:1.8"
+    scale: 1
     env_file:
       - ./console1/.env.development
 
+  logger:
+    image: "logger:1.4"
+    scale: 1
+    env_file:
+      - ./logger/.env.development
+
   hello:
-    image: "hello:1.9"
+    image: "hello:2.4"
     scale : 1
     ports:
       - 8080:8080
+    depends_on:
+      - mysqldb
     env_file:
       - ./hello/.env.development
