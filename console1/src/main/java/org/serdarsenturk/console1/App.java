@@ -17,8 +17,8 @@ public class App
     private static final Logger logger = LoggerFactory.getLogger(App.class);
 
     public static void main(String[] argv) throws IOException, TimeoutException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
-//        Consumer1.consumeAndSendMessage();
-//        Consumer2.consumeAndSendMail();
+        Consumer1.consumeAndSendMessage();
+        Consumer2.consumeAndSendMail();
 
         BasicConfigurator.configure(); // This configure to Log4j
 
