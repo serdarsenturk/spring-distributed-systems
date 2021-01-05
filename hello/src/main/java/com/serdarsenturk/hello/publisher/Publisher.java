@@ -25,11 +25,11 @@ public class Publisher {
     @Value("${serdarsenturk.rabbitmq.queue4}")
     private String queue4;
 
-    public void produce(String msg){
-        amqpTemplate.convertAndSend(queue, msg);
-        amqpTemplate.convertAndSend(queue2, msg);
-        amqpTemplate.convertAndSend(queue3, msg);
-        amqpTemplate.convertAndSend(queue4, msg);
-        System.out.println("Send message = **' " + msg);
+    public void produce(int id){
+        amqpTemplate.convertAndSend(queue, id);
+        amqpTemplate.convertAndSend(queue2, id);
+        amqpTemplate.convertAndSend(queue3, id);
+        amqpTemplate.convertAndSend(queue4, id);
+        System.out.println("Movie Id: " + id);
     }
 }
