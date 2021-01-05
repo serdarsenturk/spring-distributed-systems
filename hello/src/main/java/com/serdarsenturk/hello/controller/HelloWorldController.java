@@ -11,9 +11,9 @@ public class HelloWorldController {
     @Autowired
     Publisher publisher;
     @RequestMapping("/hello/send")
-    public String sendMessage(@RequestParam("message") String message){
-        System.out.println(message);
-            publisher.produce(message);
-        return "Successfully Message Sent";
+    public String sendMessage(@RequestParam("id") int id){
+        System.out.println(id);
+            publisher.produce(id);
+        return "Valid request";
     }
 }
