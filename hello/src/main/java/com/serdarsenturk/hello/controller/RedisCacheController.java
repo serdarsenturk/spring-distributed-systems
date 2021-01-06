@@ -1,12 +1,13 @@
 package com.serdarsenturk.hello.controller;
 
-import com.serdarsenturk.hello.service.RedisCacheService;
+import com.serdarsenturk.hello.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/cachedPage")
 @RestController
 public class RedisCacheController {
+
     @Autowired
     private RedisCacheService redisCacheService;
     private int counter = 0; // Counter, count to is provide us how many times redis responsed to request
@@ -17,7 +18,6 @@ public class RedisCacheController {
             redisCacheService.clearCache();
             counter = 0;
         }
-
         counter++;
         return redisCacheService.longRunningMethod();
     }
