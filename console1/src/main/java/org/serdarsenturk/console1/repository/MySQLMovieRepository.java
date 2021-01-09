@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MySQLMovieRepository implements MovieRepository{
@@ -15,9 +17,30 @@ public class MySQLMovieRepository implements MovieRepository{
     //EntityManager provide CRUD process on persistence.
     EntityManager entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
     EntityTransaction transaction = null;
+
     @Override
     public List<Movie> findAll(Movie movie) {
-        return null;
+        List<Movie> movies = new ArrayList<>();
+        try {
+            transaction = entityManager.getTransaction();
+
+            transaction.begin();
+
+            Query query = entityManager.createNativeQuery("select s from Movie s");
+
+            movies = query.getResultList();
+
+            movies.forEach(s -> {System.out.println(s);});
+            return movies;
+        }catch (Exception e){
+            System.out.println(e);
+            transaction.rollback();
+        }finally {
+            entityManager.close();
+            HibernateUtil.shutdown();
+        }
+        
+        return movies;
     }
 
     @Override
@@ -34,7 +57,7 @@ public class MySQLMovieRepository implements MovieRepository{
             System.out.println(e);
             transaction.rollback();
         }finally {
-            entityManager.clear();
+            entityManager.close();
             HibernateUtil.shutdown();
         }
         return movie;
