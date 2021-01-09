@@ -2,13 +2,7 @@ package org.serdarsenturk.console1.repository;
 
 import org.serdarsenturk.console1.entity.Movie;
 import org.serdarsenturk.console1.util.HibernateUtil;
-import org.springframework.data.domain.Pageable;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.List;
 
 public class MySQLMovieRepository implements MovieRepository{
@@ -18,31 +12,28 @@ public class MySQLMovieRepository implements MovieRepository{
     EntityManager entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
     EntityTransaction transaction = null;
 
+    //Find all movie by
     @Override
-    public List<Movie> findAll(Movie movie) {
-        List<Movie> movies = new ArrayList<>();
+    public void findAll() {
         try {
-            transaction = entityManager.getTransaction();
+            transaction = entityManager.getTransaction(); // Create transaction
+            transaction.begin(); // Begin transaction
 
-            transaction.begin();
+            Query query = entityManager.createNativeQuery("SELECT s FROM Movie s"); // JPQL(Jakarta Persistence Q Language)
+            List<Movie> movies = query.getResultList();
+            System.out.println("Movies");
+            movies.forEach(System.out::println); // Write all movies with foreach
 
-            Query query = entityManager.createNativeQuery("select s from Movie s");
-
-            movies = query.getResultList();
-
-            movies.forEach(s -> {System.out.println(s);});
-            return movies;
         }catch (Exception e){
             System.out.println(e);
-            transaction.rollback();
+            transaction.rollback(); // Rollback if it has failed
         }finally {
-            entityManager.close();
+            entityManager.close(); // When it finished close it.
             HibernateUtil.shutdown();
         }
-        
-        return movies;
     }
 
+    //Create Movie by Id
     @Override
     public Movie create(Movie movie) {
         try{
@@ -51,8 +42,9 @@ public class MySQLMovieRepository implements MovieRepository{
             //Start transaction
             transaction.begin();
 
-            entityManager.persist(movie);
-            transaction.commit();
+            entityManager.persist(movie); // Create a persistence for db
+            transaction.commit(); // Commit to changes.
+
         }catch (Exception e){
             System.out.println(e);
             transaction.rollback();
@@ -63,18 +55,59 @@ public class MySQLMovieRepository implements MovieRepository{
         return movie;
     }
 
+    //Delete movie by id
     @Override
     public void delete(int id) {
+        try {
+            transaction = entityManager.getTransaction();
 
+            transaction.begin();
+            Query query = entityManager.createQuery("DELETE FROM Movie m where m.id = :id");
+            query.setParameter("id", id);
+            int rowsDeleted = query.executeUpdate();
+            System.out.println("Movie deleted :" + rowsDeleted);
+        }catch (Exception e){
+            System.out.println(e);
+            transaction.rollback();
+        }finally {
+            entityManager.close();
+        }
     }
 
+    //Find movie by Id
     @Override
-    public Movie find(int id) {
-        return null;
+    public void find(int id) {
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+
+            Query query = entityManager.createQuery("select m FROM Movie m where m.id = :id");
+            query.setParameter("id", id);
+            query.executeUpdate();
+            System.out.println("Movie : " + query);
+
+        }catch (Exception e){
+            System.out.println(e);
+            transaction.rollback();
+        }finally {
+            entityManager.close();
+        }
     }
 
+    //Update received movie
     @Override
-    public Movie update(int id) {
-        return null;
+    public void update(Movie movie) {
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+
+            entityManager.merge(movie);
+            transaction.commit();
+        }catch (Exception e){
+            System.out.println(e);
+            transaction.rollback();
+        }finally {
+            entityManager.close();
+        }
     }
 }
