@@ -7,9 +7,9 @@ import java.util.List;
 
 // This interface provide to use different services on it.
 public interface MovieRepository{
-    List<Movie> findAll(Movie movie);
+    void findAll();
     Movie create(Movie movie);
     void delete(int id);
-    Movie find(int id);
-    Movie update(int id);
+    void find(int id);
+    void update(Movie movie);
 }
