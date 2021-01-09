@@ -12,3 +12,4 @@ buildNumber.properties
 .idea/
 .env*
 *.iml
+console1/console1.iml
