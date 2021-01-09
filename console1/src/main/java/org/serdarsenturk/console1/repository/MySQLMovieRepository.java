@@ -22,14 +22,21 @@ public class MySQLMovieRepository implements MovieRepository{
 
     @Override
     public Movie create(Movie movie) {
-        transaction = entityManager.getTransaction();
+        try{
+            transaction = entityManager.getTransaction();
 
-        //Start transaction
-        transaction.begin();
+            //Start transaction
+            transaction.begin();
 
-        entityManager.persist(movie);
-        transaction.commit();
-
+            entityManager.persist(movie);
+            transaction.commit();
+        }catch (Exception e){
+            System.out.println(e);
+            transaction.rollback();
+        }finally {
+            entityManager.clear();
+            HibernateUtil.shutdown();
+        }
         return movie;
     }
 
