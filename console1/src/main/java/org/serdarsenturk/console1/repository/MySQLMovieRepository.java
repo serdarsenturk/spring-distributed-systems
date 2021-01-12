@@ -60,11 +60,14 @@ public class MySQLMovieRepository implements MovieRepository{
         try {
             transaction = entityManager.getTransaction();
 
+            //Start transaction
             transaction.begin();
-            Query query = entityManager.createQuery("DELETE FROM Movie m where m.id = :id");
-            query.setParameter("id", id);
-            int rowsDeleted = query.executeUpdate();
-            System.out.println("Movie deleted :" + rowsDeleted);
+            Query query = entityManager.createQuery("delete from Movie where id =:id"); //Delete movie by id
+            query.setParameter("id", id); //Set which id will delete from table
+            query.executeUpdate(); //Execute query
+
+            transaction.commit(); //Commit to changes
+
         }catch (Exception e){
             System.out.println(e);
             transaction.rollback();
