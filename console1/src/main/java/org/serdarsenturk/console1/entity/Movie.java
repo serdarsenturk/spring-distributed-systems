@@ -1,10 +1,6 @@
 package org.serdarsenturk.console1.entity;
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Date;
-
-// Movie Entity class. I'll use this class to serialize and DAO class
 
 @Entity(name = "Movie")
 @Table(name = "Movie")
