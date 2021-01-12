@@ -81,13 +81,15 @@ public class MySQLMovieRepository implements MovieRepository{
     public void find(int id) {
         try {
             transaction = entityManager.getTransaction();
+            //Start transaction
             transaction.begin();
 
-            Query query = entityManager.createQuery("select m FROM Movie m where m.id = :id");
-            query.setParameter("id", id);
-            query.executeUpdate();
-            System.out.println("Movie : " + query);
+            Query query = entityManager.createQuery("from Movie where id =: id");
+            query.setParameter("id", id); //Set parameter which id will be find
+            Movie result = (Movie) query.getSingleResult(); //Cast Movie object will return from db
 
+            //TODO: Write toString method to write this object use this way temporarily
+            System.out.println(result.toString());
         }catch (Exception e){
             System.out.println(e);
             transaction.rollback();
