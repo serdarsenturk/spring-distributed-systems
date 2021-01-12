@@ -40,9 +40,8 @@ public class MySQLMovieRepository implements MovieRepository{
 
             //Start transaction
             transaction.begin();
-
             entityManager.persist(movie); // Create a persistence for db
-            transaction.commit(); // Commit to changes.
+            transaction.commit(); // Commit to changes
 
         }catch (Exception e){
             System.out.println(e);
