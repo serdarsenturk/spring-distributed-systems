@@ -105,8 +105,13 @@ public class MySQLMovieRepository implements MovieRepository{
             transaction = entityManager.getTransaction();
             transaction.begin();
 
-            entityManager.merge(movie);
-            transaction.commit();
+            Query query = entityManager.createQuery("update Movie set name =: name where id =: id ");
+            query.setParameter("name", movie.getName());
+            query.setParameter("id", movie.getId());
+            query.executeUpdate();
+
+            transaction.commit(); //Commit to changes
+
         }catch (Exception e){
             System.out.println(e);
             transaction.rollback();
