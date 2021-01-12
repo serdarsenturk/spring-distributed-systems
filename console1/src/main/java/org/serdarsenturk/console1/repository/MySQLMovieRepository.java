@@ -19,10 +19,9 @@ public class MySQLMovieRepository implements MovieRepository{
             transaction = entityManager.getTransaction(); // Create transaction
             transaction.begin(); // Begin transaction
 
-            Query query = entityManager.createNativeQuery("SELECT s FROM Movie s"); // JPQL(Jakarta Persistence Q Language)
-            List<Movie> movies = query.getResultList();
-            System.out.println("Movies");
-            movies.forEach(System.out::println); // Write all movies with foreach
+            Query query = entityManager.createNativeQuery("select * from Movie", Movie.class); // HQL(Hibernate Query Language)
+            List<Movie> resultList = query.getResultList(); // Returns each object in query
+            resultList.forEach(movie -> System.out.println(movie)); // Writes all movies in "Movie"table
 
         }catch (Exception e){
             System.out.println(e);
